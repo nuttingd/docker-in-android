@@ -3,10 +3,6 @@ script_dir=`dirname $0`
 action=$1
 
 init() {
-  echo Setting up networking...
-  setup-interfaces
-  ifup eth0
-
   echo Patching `setup-disk` to enable serial console output on boot
   sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /sbin/setup-disk
 
@@ -48,7 +44,7 @@ elif [[ "$action" == "docker" ]]
 then
   docker
 else
-  echo Unknown or missing action: $action
-  echo Usage: $0 <init|docker> 
+  echo "Unknown or missing action: $action"
+  echo "Usage: $0 <init|docker>"
 fi
 

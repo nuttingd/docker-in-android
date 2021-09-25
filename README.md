@@ -18,6 +18,9 @@ Login with username `root` (no password).
 From inside the VM:
 
 ```shell
+setup-interfaces
+ifup eth0
+
 wget https://raw.githubusercontent.com/nuttingd/docker-in-android/main/initvm/setup
 chmod +x setup
 # Setup Alpine Linux. Remember your password.
