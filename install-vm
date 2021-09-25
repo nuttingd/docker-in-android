@@ -5,7 +5,7 @@ img_path=$script_dir/ubuntu.img
 
 echo Installing dependencies...
 pkg update
-pkg install qemu-utils qemu-common qemu-system-x86_64-headless
+pkg install qemu-utils qemu-common qemu-system-x86_64-headless wget
 
 if [[ ! -f $img_path ]]
 then
