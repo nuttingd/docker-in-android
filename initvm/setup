@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+script_dir=`dirname $0`
+action=$1
+
+init() {
+  echo Setting up networking...
+  setup-interfaces
+  ifup eth0
+
+  echo Patching `setup-disk` to enable serial console output on boot
+  sed -i -E 's/(local kernel_opts)=.*/\1="console=ttyS0"/' /sbin/setup-disk
+
+  echo Creating answerfile...
+  cat << 'EOF' > answerfile
+KEYMAPOPTS="us us"
+HOSTNAMEOPTS="-n alpine"
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+    hostname alpine
+"
+TIMEZONEOPTS="-z UTC"
+PROXYOPTS="none"
+APKREPOSOPTS="http://dl-cdn.alpinelinux.org/alpine/v3.12/main http://dl-cdn.alpinelinux.org/alpine/v3.12/community"
+SSHDOPTS="-c openssh"
+NTPOPTS="-c busybox"
+DISKOPTS="-v -m sys -s 0 /dev/sda"
+EOF
+
+  echo Setting up Alpine Linux using answerfile...
+  setup-alpine -f answerfile
+}
+
+docker() {
+  echo Adding docker and enabling service...
+  apk update && apk add docker
+  service docker start
+  rc-update add docker
+  # todo configure: /etc/docker/daemon.json
+}
+
+if [[ "$action" == "init" ]]
+then
+  init
+elif [[ "$action" == "docker" ]]
+then
+  docker
+else
+  echo Unknown or missing action: $action
+  echo Usage: $0 <init|docker> 
+fi
+

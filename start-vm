@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+script_dir=`dirname $0`
+source $script_dir/vars
+
+if [[ -z "$NO_DAEMON" ]]
+then
+  graphic_mode='--daemonize'
+else
+  graphic_mode='-nographic'
+fi
+
+echo mem: $mem
+echo cpus: $cpus
+
+echo Starting alpine VM...
+qemu-system-x86_64 -machine q35 -m $mem -smp cpus=$cpus -cpu qemu64 \
+  -drive if=pflash,format=raw,read-only,file=$PREFIX/share/qemu/edk2-x86_64-code.fd \
+  -netdev user,id=n1,hostfwd=tcp::2222-:22,hostfwd=tcp::22375-:2375 \
+  -device virtio-net,netdev=n1 \
+  $graphic_mode \
+  $script_dir/alpine.img
+

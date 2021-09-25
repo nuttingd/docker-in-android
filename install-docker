@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# enable root-repo for docker CLI package
+echo Enabling root-repo...
+pkg install root-repo
+pkg update
+
+echo Installing docker...
+pkg install docker
+
+echo Creating docker context docker-in-android for SSH access
+docker context create \
+    --docker host=ssh://root@localhost \
+    --description="Docker-in-Android Remote" \
+    docker-in-android
+
+echo Switching to docker-in-android context...
+docker context use docker-in-android
