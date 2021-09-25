@@ -18,7 +18,7 @@ Login with username `root` (no password).
 From inside the VM:
 
 ```shell
-wget <TODO: link to initvm/setup script>
+wget https://raw.githubusercontent.com/nuttingd/docker-in-android/main/initvm/setup
 chmod +x setup
 # Setup Alpine Linux. Remember your password.
 ./setup init
@@ -36,6 +36,8 @@ NO_DAEMON=1 ./start-vm
 From inside the VM:
 
 ```shell
+wget https://raw.githubusercontent.com/nuttingd/docker-in-android/main/initvm/setup
+chmod +x setup
 ./setup docker
 poweroff
 ```
