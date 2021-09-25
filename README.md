@@ -81,4 +81,9 @@ Edit `vars`
 
 ## TODO
 
+- improve vm installation
+  - how to make script unattended
+  - how to inject userdata
+  - how to connect stdin/stdout to qemu
+  - how to automate alpine installation
 - Set up TLS for Docker TCP
