@@ -10,6 +10,9 @@ chpasswd: { expire: False }
 ssh_pwauth: True
 EOF
 
+# next: mount authorized_keys from host
+# https://superuser.com/questions/628169/how-to-share-a-directory-with-the-host-without-networking-in-qemu
+
 echo "instance-id: $(uuidgen || echo i-abcdefg)" > cloudinit-meta-data
 
 cloud-localds cloudinit.img cloudinit-user-data cloudinit-meta-data
