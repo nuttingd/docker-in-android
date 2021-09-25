@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
 script_dir=`dirname $0`
-script_dir=`dirname $0`
 source $script_dir/vars
+img_path=$script_dir/ubuntu.img
 
 echo Installing dependencies...
 pkg update
 pkg install qemu-utils qemu-common qemu-system-x86_64-headless
-wget http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86_64/alpine-virt-3.12.3-x86_64.iso
 
-echo Creating disk image...
-qemu-img create -f qcow2 alpine.img 4G
+if [[ ! -f $img_path ]]
+then
+  echo Downloading ubuntu cloud image...
+  # https://cloud-images.ubuntu.com/minimal/releases/focal/release/
+  # https://cloudinit.readthedocs.io/en/latest/topics/datasources/nocloud.html
+  # https://stackoverflow.com/questions/29137679/login-credentials-of-ubuntu-cloud-server-image
+  wget -O $img_path $ubuntu_img_url
+fi
 
-echo Starting VM with alpine linux ISO attached...
+echo Starting VM...
 echo
 echo mem: $mem
 echo cpus: $cpus
 echo
-echo 'Log in as: root (no password)'
-qemu-system-x86_64 -machine q35 -m 1024 -smp cpus=2 -cpu qemu64 \
+qemu-system-x86_64 -machine q35 -m $mem -smp cpus=$cpus -cpu qemu64 \
   -drive if=pflash,format=raw,read-only,file=$PREFIX/share/qemu/edk2-x86_64-code.fd \
   -netdev user,id=n1,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 \
-  -cdrom alpine-virt-3.12.3-x86_64.iso \
   -nographic \
-  $script_dir/alpine.img
+  $script_dir/ubuntu.img
 
