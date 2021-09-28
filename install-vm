@@ -26,5 +26,6 @@ qemu-system-x86_64 -machine q35 -m $mem -smp cpus=$cpus -cpu qemu64 \
   -drive file=cloudinit.img,if=virtio,format=raw,read-only=on \
   -netdev user,id=n1,hostfwd=tcp::2222-:22 -device virtio-net,netdev=n1 \
   -nographic \
+  -virtfs local,path=$script_dir/bind,mount_tag=host0,security_model=mapped,id=host0  \
   $script_dir/ubuntu.img
 
