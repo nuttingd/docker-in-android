@@ -1,5 +1,5 @@
 img_size=5G
 host_ssh_port=2222
 mem=1024
-cpus=4
+cpus=2
 ubuntu_img_url='https://cloud-images.ubuntu.com/minimal/releases/focal/release/ubuntu-20.04-minimal-cloudimg-amd64.img'
