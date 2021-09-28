@@ -2,3 +2,20 @@
 password: passw0rd
 chpasswd: { expire: False }
 ssh_pwauth: True
+
+package_update: true
+package_upgrade: true
+
+packages:
+ - docker.io
+
+mounts:
+ - [ host0, /mnt/host, 9p, "trans=virtio,version=9p2000.L" ]
+
+runcmd:
+ - mount -a
+ - chown ubuntu:ubuntu /mnt/host
+ - mkdir -p /home/ubuntu/.ssh
+ - chmod 700 /home/ubuntu/.ssh
+ - chown ubuntu:ubuntu /home/ubuntu/.ssh
+ - ln -sf /mnt/host/authorized_keys /home/ubuntu/.ssh/authorized_keys

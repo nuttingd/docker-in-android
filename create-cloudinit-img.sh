@@ -3,12 +3,6 @@ then
   echo Please install cloud-localds
   return 1
 fi
-cat << 'EOF' > cloudinit-user-data
-#cloud-config
-password: passw0rd
-chpasswd: { expire: False }
-ssh_pwauth: True
-EOF
 
 # next: mount authorized_keys from host
 # https://superuser.com/questions/628169/how-to-share-a-directory-with-the-host-without-networking-in-qemu
