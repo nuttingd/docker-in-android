@@ -15,6 +15,7 @@ then
   # https://cloudinit.readthedocs.io/en/latest/topics/datasources/nocloud.html
   # https://stackoverflow.com/questions/29137679/login-credentials-of-ubuntu-cloud-server-image
   wget -O $img_path $ubuntu_img_url
+  qemu-img resize $img_path $img_size
 fi
 
 $script_dir/start-vm

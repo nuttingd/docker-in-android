@@ -1,3 +1,4 @@
+img_size=5G
 host_ssh_port=2222
 mem=1024
 cpus=4
