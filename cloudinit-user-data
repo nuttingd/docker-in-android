@@ -16,6 +16,6 @@ runcmd:
  - chown ubuntu:ubuntu /mnt/host
  - mkdir -p /home/ubuntu/.ssh
  - chmod 700 /home/ubuntu/.ssh
- - chown ubuntu:ubuntu /home/ubuntu/.ssh
  - su - ubuntu -c 'ln -sf /mnt/host/authorized_keys /home/ubuntu/.ssh/'
+ - chown -R ubuntu:ubuntu /home/ubuntu/.ssh
  - usermod -aG docker ubuntu
