@@ -1,7 +1,13 @@
+set -e
+
+if ! command -v uuidgen > /dev/null
+then
+  apt update && apt install uuid-runtime
+fi
+
 if ! command -v cloud-localds > /dev/null
 then
-  echo Please install cloud-localds
-  return 1
+  apt update && apt install cloud-image-utils
 fi
 
 # next: mount authorized_keys from host
