@@ -10,6 +10,9 @@ pkg update
 echo Installing docker...
 pkg install docker
 
+echo Installing docker-compose...
+pkg install docker-compose
+
 echo Creating docker context docker-in-android for SSH access
 docker context create \
     --docker host=ssh://ubuntu@localhost:$host_ssh_port \
