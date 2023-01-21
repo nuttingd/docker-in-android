@@ -21,3 +21,10 @@ gpg --export-ssh-key keyid > bind/authorized_keys
 docker run node
 
 ```
+
+## Troubleshooting
+
+`Host key verification failed`
+Connect once to the VM using SSH so the host is added to ~/.ssh/known_hosts.
+
+Other SSH auth related errors. Be sure the host bound files in /mnt/host are owned by `ubuntu:ubuntu` and have proper permissions (600 for authorized_keys).
